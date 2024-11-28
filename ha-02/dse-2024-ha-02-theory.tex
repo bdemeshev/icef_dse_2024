@@ -1,0 +1,203 @@
+
+\documentclass[12pt]{article}
+
+% \usepackage{physics}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\usepackage{tikzducks}
+
+\usepackage{tikz} % картинки в tikz
+\usepackage{microtype} % свешивание пунктуации
+
+\usepackage{array} % для столбцов фиксированной ширины
+
+\usepackage{indentfirst} % отступ в первом параграфе
+
+\usepackage{sectsty} % для центрирования названий частей
+\allsectionsfont{\centering}
+
+\usepackage{amsmath, amsfonts, amssymb} % куча стандартных математических плюшек
+
+\usepackage{comment}
+
+\usepackage[top=2cm, left=1.2cm, right=1.2cm, bottom=2cm]{geometry} % размер текста на странице
+
+\usepackage{lastpage} % чтобы узнать номер последней страницы
+
+\usepackage{enumitem} % дополнительные плюшки для списков
+%  например \begin{enumerate}[resume] позволяет продолжить нумерацию в новом списке
+\usepackage{caption}
+
+\usepackage{url} % to use \url{link to web}
+
+
+\newcommand{\smallduck}{\begin{tikzpicture}[scale=0.3]
+    \duck[
+        cape=black,
+        hat=black,
+        mask=black
+    ]
+    \end{tikzpicture}}
+
+\usepackage{fancyhdr} % весёлые колонтитулы
+\pagestyle{fancy}
+\lhead{Fall 2024}
+\chead{HA-2, theory}
+\rhead{Data Science for Economists}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\usepackage{tcolorbox} % рамочки!
+
+\usepackage{todonotes} % для вставки в документ заметок о том, что осталось сделать
+% \todo{Здесь надо коэффициенты исправить}
+% \missingfigure{Здесь будет Последний день Помпеи}
+% \listoftodos - печатает все поставленные \todo'шки
+
+
+% более красивые таблицы
+\usepackage{booktabs}
+% заповеди из докупентации:
+% 1. Не используйте вертикальные линни
+% 2. Не используйте двойные линии
+% 3. Единицы измерения - в шапку таблицы
+% 4. Не сокращайте .1 вместо 0.1
+% 5. Повторяющееся значение повторяйте, а не говорите "то же"
+
+
+\setcounter{MaxMatrixCols}{20}
+% by crazy default pmatrix supports only 10 cols :)
+
+
+\usepackage{fontspec}
+\usepackage{libertine}
+\usepackage{polyglossia}
+
+\setmainlanguage{russian}
+\setotherlanguages{english}
+
+% download "Linux Libertine" fonts:
+% http://www.linuxlibertine.org/index.php?id=91&L=1
+% \setmainfont{Linux Libertine O} % or Helvetica, Arial, Cambria
+% why do we need \newfontfamily:
+% http://tex.stackexchange.com/questions/91507/
+% \newfontfamily{\cyrillicfonttt}{Linux Libertine O}
+
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ} % для списков с русскими буквами
+% \setlist[enumerate, 2]{label=\asbuk*),ref=\asbuk*}
+
+%% эконометрические сокращения
+\DeclareMathOperator{\pCorr}{\mathrm{pCorr}}
+\DeclareMathOperator{\Cov}{\mathbb{C}ov}
+\DeclareMathOperator{\Corr}{\mathbb{C}orr}
+\DeclareMathOperator{\Var}{\mathbb{V}ar}
+\DeclareMathOperator{\col}{col}
+\DeclareMathOperator{\row}{row}
+
+\let\P\relax
+\DeclareMathOperator{\P}{\mathbb{P}}
+
+\DeclareMathOperator{\E}{\mathbb{E}}
+% \DeclareMathOperator{\tr}{trace}
+\DeclareMathOperator{\card}{card}
+
+\DeclareMathOperator{\Convex}{Convex}
+
+\newcommand \cN{\mathcal{N}}
+\newcommand \dN{\mathcal{N}}
+\newcommand \dBin{\mathrm{Bin}}
+
+
+\newcommand \RR{\mathbb{R}}
+\newcommand \NN{\mathbb{N}}
+
+
+
+
+
+\begin{document}
+
+% \begin{enumerate}
+%     \item entropy
+%     \item horse betting
+%     \item bootstrap 
+%     \item regression tree
+%     \item classification tree / logistic function 
+%     \item random forest/gradient boosting
+% \end{enumerate}
+
+\begin{enumerate}
+    \item The distribution of $(X, Y)$ is given by
+    \begin{center}
+        \begin{tabular}{lccc}
+            \toprule
+                & $Y = 1$  & $Y = 2$  & $Y = 3$ \\
+            \midrule
+            $X = 0$ & $0.2$  & $0.2$  & $0.1$ \\
+            $X = 1$ & $0.5$  &  $0$   & $0$ \\
+          \bottomrule
+        \end{tabular}
+    \end{center}
+    \begin{enumerate}
+        \item Find the entropies $\H(X)$, $\H(Y)$ and the joint entropy $\H(X, Y)$.
+        \item Find conditional entropy $\H(Y \mid X)$.
+        \item What is a maximal value of conditional entropy $\H(Y \mid X)$, 
+        if $X$ has two possible values and $Y$ — three possible values?
+    \end{enumerate}
+    
+    
+    \item Consider a toy dataset $y = (10, 10, 30, 30, 30, 40)$ and $x = (1, 2, 3, 4, 5, NA)$.
+    
+    Build the regression true based on the following rules:
+        \begin{itemize}
+            \item The tree has two splitting nodes.
+            \item Each node is split to minimize sum of squared residuals. 
+            \item If there are many possible nodes to split choose the node with maximal sum of squared residuals drop.
+            \item For missing observations (NA) consider both split directions. 
+            \item In case of many splits with the same sum of squared residuals drop choose the split with minimal threshold on $x$.
+        \end{itemize}
+        
+
+    \item Consider the simple logit model for binary $y_i \in \{0, 1\}$.
+    We assume that $(y_i \mid x)$ are independent and
+    \[
+    \P(y_i =1 \mid x) = \frac{\exp(\beta_1 + \beta_x x_i)}{1 + \exp(\beta_1 + \beta_x x_i)}.
+    \]
+    You don't know the true values of $\beta_1$ and $\beta_x$ and you would like to estimate them using maximum likelihood.
+    \begin{enumerate}
+        \item Write the likelihood function in the general form. 
+        \item Write the first order conditions $\partial \ln L/\partial \hat\beta_1 = 0$ and $\partial \ln L/\partial \hat\beta_x = 0$.
+        \item You have $200$ observations and $150$ of them are $y_i = 1$. 
+        
+        What will be the value of a sum $\sum_{i=1}^{200} \hat\P(y_i = 1\mid x)$?
+    \end{enumerate}
+
+    Hint: the formula for $\hat \P(\dots)$ is similar to $\P(\dots)$, just $\beta$-s are replaced by $\hat\beta$-s.
+    You can answer (c) without solving the system of first order conditions. 
+
+    \item Random variables $y_1$, $y_2$, \dots, $y_n$ is a random sample from a continuous distribution. 
+    Let $y_1^*$, $y_2^*$, \dots, $y_n^*$ be the first bootstrap sample. 
+
+    \begin{enumerate}
+        \item Find $\P(y_1 = y_2^*)$, $\P(y_1 = y_2)$, $\P(y_1^* = y_2^*)$.
+        \item Find $\P(\text{ all } y_i^* \text{ are equal})$.
+        \item Find $\P(\max\{y_1, y_2, \dots, y_n\} = \max\{y_1^*, y_2^*, \dots, y_n^*\})$.
+        \item What is the probability that all original observations are present in the bootstrap sample?
+    \end{enumerate}
+\end{enumerate}
+
+
+\end{document}

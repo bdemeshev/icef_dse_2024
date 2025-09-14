@@ -1,0 +1,236 @@
+
+\documentclass[12pt]{article}
+
+% \usepackage{physics}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\usepackage{tikzducks}
+
+\usepackage{tikz} % картинки в tikz
+\usepackage{microtype} % свешивание пунктуации
+
+\usepackage{array} % для столбцов фиксированной ширины
+
+\usepackage{indentfirst} % отступ в первом параграфе
+
+\usepackage{sectsty} % для центрирования названий частей
+\allsectionsfont{\centering}
+
+\usepackage{amsmath, amsfonts, amssymb} % куча стандартных математических плюшек
+
+\usepackage{comment}
+
+\usepackage[top=2cm, left=1.2cm, right=1.2cm, bottom=2cm]{geometry} % размер текста на странице
+
+\usepackage{lastpage} % чтобы узнать номер последней страницы
+
+\usepackage{enumitem} % дополнительные плюшки для списков
+%  например \begin{enumerate}[resume] позволяет продолжить нумерацию в новом списке
+\usepackage{caption}
+
+\usepackage{url} % to use \url{link to web}
+
+
+\newcommand{\smallduck}{\begin{tikzpicture}[scale=0.3]
+    \duck[
+        cape=black,
+        hat=black,
+        mask=black
+    ]
+    \end{tikzpicture}}
+
+\usepackage{fancyhdr} % весёлые колонтитулы
+\pagestyle{fancy}
+\lhead{Fall 2024}
+\chead{Final retake}
+\rhead{Data Science for Economists}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\usepackage{tcolorbox} % рамочки!
+
+\usepackage{todonotes} % для вставки в документ заметок о том, что осталось сделать
+% \todo{Здесь надо коэффициенты исправить}
+% \missingfigure{Здесь будет Последний день Помпеи}
+% \listoftodos - печатает все поставленные \todo'шки
+
+
+% более красивые таблицы
+\usepackage{booktabs}
+% заповеди из докупентации:
+% 1. Не используйте вертикальные линни
+% 2. Не используйте двойные линии
+% 3. Единицы измерения - в шапку таблицы
+% 4. Не сокращайте .1 вместо 0.1
+% 5. Повторяющееся значение повторяйте, а не говорите "то же"
+
+
+\setcounter{MaxMatrixCols}{20}
+% by crazy default pmatrix supports only 10 cols :)
+
+
+\usepackage{fontspec}
+\usepackage{libertine}
+\usepackage{polyglossia}
+
+\setmainlanguage{russian}
+\setotherlanguages{english}
+
+% download "Linux Libertine" fonts:
+% http://www.linuxlibertine.org/index.php?id=91&L=1
+% \setmainfont{Linux Libertine O} % or Helvetica, Arial, Cambria
+% why do we need \newfontfamily:
+% http://tex.stackexchange.com/questions/91507/
+% \newfontfamily{\cyrillicfonttt}{Linux Libertine O}
+
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ} % для списков с русскими буквами
+% \setlist[enumerate, 2]{label=\asbuk*),ref=\asbuk*}
+
+%% эконометрические сокращения
+\DeclareMathOperator{\pCorr}{\mathrm{pCorr}}
+\DeclareMathOperator{\Cov}{\mathbb{C}ov}
+\DeclareMathOperator{\Corr}{\mathbb{C}orr}
+\DeclareMathOperator{\Var}{\mathbb{V}ar}
+\DeclareMathOperator{\col}{col}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\loss}{loss}
+
+\let\P\relax
+\DeclareMathOperator{\P}{\mathbb{P}}
+
+\let\H\relax
+\DeclareMathOperator{\H}{\mathbb{H}}
+
+
+\DeclareMathOperator{\E}{\mathbb{E}}
+% \DeclareMathOperator{\tr}{trace}
+\DeclareMathOperator{\card}{card}
+
+\DeclareMathOperator{\Convex}{Convex}
+
+\newcommand \cN{\mathcal{N}}
+\newcommand \dN{\mathcal{N}}
+\newcommand \dBin{\mathrm{Bin}}
+\newcommand \dExpo{\mathrm{Expo}}
+\newcommand{\hb}{\hat{\beta}}
+
+
+\newcommand \RR{\mathbb{R}}
+\newcommand \NN{\mathbb{N}}
+
+
+
+
+
+\begin{document}
+
+% \begin{enumerate}
+%     \item entropy
+%     \item horse betting
+%     \item bootstrap 
+%     \item regression tree
+%     \item classification tree / logistic function 
+%     \item random forest/gradient boosting
+% \end{enumerate}
+
+\begin{enumerate}
+    \item Consider the $ETS(AAN)$ model with $\alpha = 0.1$, $\beta=0.1$, $\ell_{99}=8$, $b_{99}=1$, $y_{99}=10$, $y_{100}=8$, $\sigma^2=16$.
+    \[
+      \begin{cases}
+            u_t \sim \cN (0, \sigma^2) \\
+            b_t = b_{t-1} + \beta u_t \\
+            \ell_t = \ell_{t-1} + b_{t-1} + \alpha u_t \\
+            y_t = \ell_{t-1} + b_{t-1} + u_t
+      \end{cases}
+    \]    
+     \begin{enumerate}
+      \item Find $\ell_{100}$, $b_{100}$.
+      \item Find 95\% predictive interval for $y_{102}$.
+    \end{enumerate}
+
+    \item {[10]} I have two exactly proportional regressors, $w_i = 2x_i$, 
+    Consider the ridge regression loss function,  
+    \[
+    \loss(\hb_1, \hb_2) = \sum_i (y_i - \hat y_i)^2 + \lambda \cdot (\hb_1^2 + \hb_2^2), \quad \hat y_i = \hb_1 x_i + \hb_2 w_i.
+    \] 
+    \begin{enumerate}
+        \item {[4]} Write the first order conditions for $\hb_1$ and $\hb_2$.
+        \item {[6]} Find the penalized estimates $\hb_1$ and $\hb_2$ for arbitrary $\lambda > 0$.
+    \end{enumerate}
+
+
+    \item Let's use $\{-1, +1\}$ encoding for binary variable $y_i$ instead of $\{0, 1\}$.
+    Consider a simple logit model where $\P(y_i = 1 \mid x_i) = \Lambda(\beta_1 + \beta_x x_i)$ where $x_i$ is scalar. 
+    
+    \begin{enumerate}
+        \item {[6]} Write the first order conditions for optimization. 
+        Explicitely find $\Lambda'(u)$ as a function of $u$.
+    \end{enumerate}
+    You have $500$ observations, $y_i = 1$ in $300$ observations. 
+    \begin{enumerate}[resume]
+        \item {[4]} Without finding $\hb_1$, $\hb_2$ find the sum $\sum \hat{\P}(y_i = 1 \mid x_i) = \sum \Lambda(\hb_1 + \hb_x x_i)$.
+    \end{enumerate}  
+
+    \item {[10]} Consider the model $y = X\beta + u$ where $\beta$ is non-random, $\E(u \mid X ) = 0$. 
+    The matrix $X$ of size $n\times k$ has $\rank X = k$ and $\Var(u \mid X) = \sigma^2 I$.
+    Let $\hb$ be the standard OLS estimator of $\beta$.
+
+    \begin{enumerate}
+        \item {[2]} Find $\E(y - \hat y \mid X)$.
+        \item {[4 + 4]} Find $\Cov(\hb, y \mid X)$ and $\Cov(\hat y, y - \hat y \mid X)$.
+    \end{enumerate}
+
+    \item {[10]} Consider the matrix $X = \begin{pmatrix}
+        1 & 2 \\
+        1 & 2 \\
+    \end{pmatrix}$.
+    
+    \begin{enumerate}
+        \item {[4]} Find the matrix $X^TX$ and diagonalize it. 
+        \item {[3]} Find the SVD of $X$. 
+    \end{enumerate}
+    
+    The generalized Moore-Penrose inverse for the matrix $M = U D V^T$ is defined as
+    $M^+ = V D^+ U^T$ where to calculate $D^+$ we invert all non-zero elements on the diagonal leaving all zeros in place. 
+    \begin{enumerate}[resume]
+        \item {[3]} Find the generalized inverse $X^+$.
+    \end{enumerate}
+
+
+    \item {[10]} The prior belief for the parameter $x$ is uniform on $[0; 1]$. 
+    Conditionally on $x$ the observations $y_1$ and $y_2$ are independent exponentially distributed with rate $x$.
+
+    \begin{enumerate}
+        \item {[7]} Find the posterior distribution of the parameter $x$ given that $y_1 = 5$ and $y_2 = 7$ up to a normalizing constant.
+        \item {[3]} If possible find the normalizing constant. 
+    \end{enumerate}
+
+    Hint: if you missed the last lecture, 
+    then just replace `posterior' by `conditional' and `prior' by `unconditional' and recall that $f(x \mid y) = f(x, y) / f(y)$.
+
+ 
+    
+    
+
+    
+
+
+
+\end{enumerate}
+
+
+\end{document}
